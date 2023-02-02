@@ -1,4 +1,3 @@
-
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
@@ -25,6 +24,7 @@ app.get("/", async (req, res) => {
 
 //Routes to controllers
 app.use("/recipes", require("./controllers/recipe"));
+app.use("/recipes/ingredient", require("./controllers/ingredients"));
 
 //******************* Server connect ******************
 const port = process.env.PORT || 5001;

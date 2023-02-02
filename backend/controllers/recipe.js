@@ -8,6 +8,8 @@ const app = express();
 app.use(cors());
 dotenv.config();
 
+// *************************** Gets ***************************** //
+
 //Get all recipes
 router.get("/", async (req, res) => {
   try {
@@ -18,11 +20,14 @@ router.get("/", async (req, res) => {
   }
 });
 
+
+//*******************************GET ********************************* */
+
 //Get a single Recipe with ingredients by ID
 router.get("/:id", async (req, res) => {
   try {
     const recipe = await database.query("SELECT * FROM recipes WHERE id = $1", [req.params.id]);
-    const ingredients = await database.query("SELECT * FROM ingredients WHERE recipe_id = $1", [req.params.id]);
+    const ingredients = await database.query("SELECT * FROM ingredients WHERE recipe_id = $1 ORDER BY ingredient", [req.params.id]);
     res.json({
       recipe: recipe.rows[0],
       ingredients: ingredients.rows,
@@ -31,6 +36,8 @@ router.get("/:id", async (req, res) => {
     console.log(error);
   }
 });
+
+// *************************** Creates ***************************** //
 
 //Create single Recipe
 router.post("/", async (req, res) => {
@@ -41,19 +48,43 @@ router.post("/", async (req, res) => {
       req.body.recipe_directions,
       req.body.recipe_notes,
     ]);
+    res.json(recipe.rows[0]);
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+//*******************************Update ************************* */
+
+//Update a single recipe by ID
+
+router.put("/:id", async (req, res) => {
+  try {
+    const recipe = await database.query("UPDATE recipes SET recipe_name = $1, recipe_type= $2, recipe_directions = $3, recipe_notes = $4  WHERE id = $5 RETURNING *", [
+      req.body.recipe_name,
+      req.body.recipe_type,
+      req.body.recipe_directions,
+      req.body.recipe_notes,
+      req.params.id,
+    ]);
     console.log(req.body), res.json(recipe.rows[0]);
   } catch (error) {
     console.log(error.message);
   }
 });
 
-//Create single Ingredient
-router.post("/ingredient", async (req, res) => {
+// *********************************DELETE Recipe and all ingredients attached to the same ID******************************
+
+router.delete("/:id", async (req, res) => {
   try {
-    const ingredient = await database.query("INSERT INTO ingredients (ingredient, recipe_id) VALUES ($1, $2) RETURNING *", [req.body.ingredient, req.body.recipe_id]);
-    console.log(req.body), res.json(ingredient.rows[0]);
+    const ingredients = await database.query("DELETE FROM ingredients WHERE recipe_id = $1 RETURNING *", [req.params.id]);
+    const recipe = await database.query("DELETE FROM recipes WHERE id = $1 RETURNING *", [req.params.id]);
+    res.json({
+      recipe: recipe.rows[0],
+      ingredients: ingredients.rows,
+    });
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
 });
 
