@@ -8,6 +8,7 @@ const AddNewRecipe = () => {
   const [recipeType, setRecipeType] = useState("Recipe Type");
   const { addRecipe } = useContext(RecipeContext);
 
+  // Create new Recipe
   const handleSubmit = async (e) => {
     e.preventDefault();
 

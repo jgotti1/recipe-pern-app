@@ -7,6 +7,7 @@ import { RecipeContext } from "../context/RecipeContext";
 const RecipeList = () => {
   const { recipes, setRecipes } = useContext(RecipeContext);
 
+  // Get all Recipes at refresh
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -19,6 +20,29 @@ const RecipeList = () => {
     };
     fetchData();
   }, [recipes, setRecipes]);
+
+  // Delete a recipe
+
+  const handleDelete = async (e, id) => {
+    e.stopPropagation();
+    try {
+      const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}recipes/${id}`);
+      if (response.ok) {
+        setRecipes(
+          recipes.filter((recipe) => {
+            return recipe.id !== id;
+          })
+        );
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    // setRestaurants(
+    //   restaurants.filter((restaurant) => {
+    //     return restaurant.id !== id;
+    //   })
+    // );
+  };
 
   return (
     <div className="list-group container-xlg mt-4">
@@ -42,7 +66,13 @@ const RecipeList = () => {
                     <button className="btn btn-warning">Edit</button>
                   </td>
                   <td>
-                    <button className="btn btn-danger">Edit</button>
+                    <button
+                      onClick={(e) => {
+                        if (window.confirm("Are you sure you want to delete this recipe?")) handleDelete(e, recipe.id);
+                      }}
+                      className="btn btn-danger">
+                      Delete
+                    </button>
                   </td>
                 </tr>
               );
