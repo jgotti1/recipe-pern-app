@@ -21,8 +21,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-//*******************************GET ********************************* */
-
 //Get a single Recipe with ingredients by ID
 router.get("/:id", async (req, res) => {
   try {
@@ -37,7 +35,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// *************************** Creates ***************************** //
+// *************************** Create ***************************** //
 
 //Create single Recipe
 router.post("/", async (req, res) => {
