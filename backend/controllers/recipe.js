@@ -5,6 +5,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const database = require("../db/dataBase.js");
 const app = express();
+
 app.use(cors());
 dotenv.config();
 
@@ -19,7 +20,6 @@ router.get("/", async (req, res) => {
     console.log(error);
   }
 });
-
 
 //*******************************GET ********************************* */
 
