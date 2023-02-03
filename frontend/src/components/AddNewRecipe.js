@@ -5,14 +5,16 @@ import axios from "axios";
 
 const AddNewRecipe = () => {
   const [recipeName, setRecipeName] = useState("");
-  const [recipeType, setRecipeType] = useState("Recipe Type");
+  const [recipeType, setRecipeType] = useState("Type");
   const { addRecipe } = useContext(RecipeContext);
+  const { recipeFilter } = useContext(RecipeContext);
+  const { setRecipeFilteredData } = useContext(RecipeContext);
 
   // Create new Recipe
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (recipeName != "" && recipeType != "Recipe Type") {
+    if (recipeName !== "" && recipeType !== "Type") {
       try {
         const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}recipes`, {
           recipe_name: recipeName,
@@ -20,12 +22,29 @@ const AddNewRecipe = () => {
         });
 
         if (response.status === 200) {
-          // below code to refresh the screen by running the useEffect in the list with this logic below //
-          addRecipe(response.data);
+          if (recipeFilter !== "Filter Recipes" && recipeFilter !== "*All Recipes*") {
+            addRecipe(response.data);
+            const data = await axios.get(`${process.env.REACT_APP_SERVER_URL}recipes/filter/${recipeFilter}`);
+            setRecipeFilteredData(data.data);
 
-          //reset create form
-          setRecipeName("");
-          setRecipeType("Recipe Type");
+            //reset create form
+            setRecipeName("");
+            setRecipeType("Type");
+          } else {
+         
+            addRecipe(response.data);
+
+            //reset create form
+            setRecipeName("");
+            setRecipeType("Type");
+          }
+
+          // // below code to refresh the screen by running the useEffect in the list with this logic below //
+          // addRecipe(response.data);
+
+          // //reset create form
+          // setRecipeName("");
+          // setRecipeType("Type");
         }
       } catch (error) {
         console.log(error.message);
@@ -46,7 +65,7 @@ const AddNewRecipe = () => {
           </div>
           <div className="col-4">
             <select value={recipeType} onChange={(e) => setRecipeType(e.target.value)} className="form-select" id="autoSizingSelect">
-              <option disabled>Recipe Type</option>
+              <option disabled>Type</option>
               <option value="Meal">Meal</option>
               <option value="Dessert">Dessert</option>
               <option value="Drink">Drink</option>
