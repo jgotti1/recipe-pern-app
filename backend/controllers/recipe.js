@@ -24,7 +24,7 @@ router.get("/", async (req, res) => {
 //Get all recipes filtered by type
 router.get("/filter/:recipeFilter", async (req, res) => {
   try {
-    const recipes = await database.query("select * from recipes WHERE recipe_type = $1", [req.params.recipeFilter]);
+    const recipes = await database.query("select * from recipes WHERE recipe_type = $1 ORDER BY recipe_name", [req.params.recipeFilter]);
 
     res.json(recipes.rows);
   } catch (error) {
