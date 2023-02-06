@@ -33,3 +33,43 @@ code {
 .filterMe {
   max-width: 300px;
 }
+.ingredientWidth {
+  max-width: 600px;
+}
+
+.addIngred {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.recipeName {
+  text-shadow: 2px 2px 8px #c2bfbf;
+  width: 300px;
+}
+
+.recipeType {
+  width: 400px;
+  display: flex;
+  justify-content: center;
+  gap: 0px;
+  align-items: center;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+
+.recipeTypeDrop {
+  width: 105px;
+  height: 35px;
+  margin-right: 30px;
+}
+
+.directions {
+  max-width: 800px;
+}
+.textArea {
+  min-height: 1000px;
+}
+

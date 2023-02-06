@@ -76,7 +76,7 @@ router.put("/:id", async (req, res) => {
       req.body.recipe_notes,
       req.params.id,
     ]);
-    console.log(req.body), res.json(recipe.rows[0]);
+    // console.log(req.body), res.json(recipe.rows[0]);
   } catch (error) {
     console.log(error.message);
   }

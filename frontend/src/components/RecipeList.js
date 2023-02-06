@@ -3,13 +3,14 @@ import { useContext } from "react";
 import axios from "axios";
 import { RecipeContext } from "../context/RecipeContext";
 
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const RecipeList = () => {
   const { recipes, setRecipes } = useContext(RecipeContext);
   const { recipeFilter, setRecipeFilter } = useContext(RecipeContext);
   const { recipeFilteredData, setRecipeFilteredData } = useContext(RecipeContext);
   const [filter, setFilter] = useState("Filter Recipes");
+  const navigate = useNavigate();
 
   // Get all Recipes at refresh
   useEffect(() => {
@@ -40,7 +41,6 @@ const RecipeList = () => {
     } catch (error) {
       console.log(error);
     }
-
     setRecipeFilter(filter);
   };
 
@@ -65,8 +65,14 @@ const RecipeList = () => {
     }
   };
 
+  //Edit Recipe
+  const handleDetails = (e, id) => {
+    e.stopPropagation();
+    navigate(`/recipe/${id}/update`);
+  };
+
   return (
-    <div className="list-group container-xlg mt-4">
+    <div className="list-group container-sm mt-4 recipeList">
       <form className="justify-content-center row ">
         <div className="col-7 filterMe">
           <select value={filter} onChange={(e) => setFilter(e.target.value)} className="form-select" id="autoSizingSelect">
@@ -87,33 +93,42 @@ const RecipeList = () => {
           </button>
         </div>
       </form>
-
       <br />
-      <table className="table table-hover ">
-        <thead>
+      <table className="table table-sm table-hover ">
+        <thead >
           <tr className="bg-primary text-white">
-            <th scope="col">Recipe</th>
-            <th scope="col">Type</th>
-            <th scope="col">Edit</th>
-            <th scope="col">Delete</th>
+            <th className="col-5 ps-3" scope="col">
+              Recipe
+            </th>
+            <th className="col-5" scope="col">
+              Type
+            </th>
+            <th className="col-1" scope="col">
+              Delete
+            </th>
           </tr>
         </thead>
         <tbody className="tableBody">
           {recipes &&
             recipes.map((recipe) => {
               return (
-                <tr key={recipe.id}>
-                  <td>{recipe.recipe_name}</td>
-                  <td>{recipe.recipe_type}</td>
-                  <td>
-                    <button className="btn btn-warning">Edit</button>
-                  </td>
-                  <td>
+                <tr
+                  key={recipe.id}
+                  onClick={(e) => {
+                    handleDetails(e, recipe.id);
+                  }}>
+                  <td className="col-6 ps-3">{recipe.recipe_name}</td>
+                  <td className="col-5 ps-1"> {recipe.recipe_type}</td>
+                  <td className="col-1">
                     <button
                       onClick={(e) => {
-                        if (window.confirm("Are you sure you want to delete this recipe?")) handleDelete(e, recipe.id);
+                        if (window.confirm("Are you sure you want to delete this recipe?")) {
+                          handleDelete(e, recipe.id);
+                        } else {
+                          window.location.reload();
+                        }
                       }}
-                      className="btn btn-danger">
+                      className="btn btn-sm btn-danger">
                       Delete
                     </button>
                   </td>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useContext } from "react";
 import { RecipeContext } from "../context/RecipeContext";
+
 import axios from "axios";
 
 const AddNewRecipe = () => {
@@ -31,21 +32,14 @@ const AddNewRecipe = () => {
             setRecipeName("");
             setRecipeType("Type");
           } else {
-         
             addRecipe(response.data);
 
             //reset create form
             setRecipeName("");
             setRecipeType("Type");
           }
-
-          // // below code to refresh the screen by running the useEffect in the list with this logic below //
-          // addRecipe(response.data);
-
-          // //reset create form
-          // setRecipeName("");
-          // setRecipeType("Type");
         }
+        alert("Please select the new recipe from the list to ad details");
       } catch (error) {
         console.log(error.message);
       }
