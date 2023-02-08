@@ -9,6 +9,7 @@ const RecipeList = () => {
   const { recipes, setRecipes } = useContext(RecipeContext);
   const { recipeFilter, setRecipeFilter } = useContext(RecipeContext);
   const { recipeFilteredData, setRecipeFilteredData } = useContext(RecipeContext);
+  const { ingredients } = useContext(RecipeContext);
   const [filter, setFilter] = useState("Filter Recipes");
   const navigate = useNavigate();
 
@@ -28,7 +29,7 @@ const RecipeList = () => {
       };
       fetchData();
     }
-  }, [recipes.length, recipeFilteredData, recipeFilter, setRecipes]);
+  }, [recipes.length, recipeFilteredData, recipeFilter, setRecipes, ingredients]);
 
   // filter by type
   const handleFilter = async (e) => {
@@ -95,7 +96,7 @@ const RecipeList = () => {
       </form>
       <br />
       <table className="table table-sm table-hover ">
-        <thead >
+        <thead>
           <tr className="bg-primary text-white">
             <th className="col-5 ps-3" scope="col">
               Recipe

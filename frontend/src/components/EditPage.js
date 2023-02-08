@@ -8,7 +8,7 @@ const EditPage = () => {
   const [recipeDetails, setRecipeDetails] = useState("");
   const [recipeDetailsType, setRecipeDetailsType] = useState("");
   const [recipeDetailsName, setRecipeDetailsName] = useState("");
-  const [recipeDetailsDirections, setRecipeDetailsDirections] = useState("");
+  const [recipeDetailsDirections, setRecipeDetailsDirections] = useState("Enter Reciepe Directions Here");
   const [ingredientsDetails, setIngredientsDetails] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
@@ -24,9 +24,9 @@ const EditPage = () => {
       setIngredientsDetails(response.data.ingredients);
     };
     updateRecipe();
-  }, [id]);
+  }, [id, ingredientsDetails.length]);
 
-  const handleChanges= async (e, id) => {
+  const handleChanges = async (e, id) => {
     e.preventDefault();
     try {
       await axios.put(`${process.env.REACT_APP_SERVER_URL}recipes/${id}`, {
@@ -37,9 +37,9 @@ const EditPage = () => {
     } catch (error) {
       console.log(error);
     }
-alert("Recipe Changes Applied")
+    alert("Recipe Changes Applied");
   };
-  console.log(recipeDetails, recipeDetailsType);
+  // console.log(recipeDetails, ingredientsDetails.length);
   return (
     <div>
       <h1 className="font-weight-bold display-1 text-center mt-1">Recipe Details</h1>
@@ -64,7 +64,7 @@ alert("Recipe Changes Applied")
         </select>
       </div>
 
-      <Ingredients ingredients={ingredientsDetails} />
+      <Ingredients ingredientProps={ingredientsDetails} id={id} />
       <div className="form-group">
         <form>
           <div className="form-group container-flex directions mx-auto">
