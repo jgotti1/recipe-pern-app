@@ -8,7 +8,7 @@ const EditPage = () => {
   const [recipeDetails, setRecipeDetails] = useState("");
   const [recipeDetailsType, setRecipeDetailsType] = useState("");
   const [recipeDetailsName, setRecipeDetailsName] = useState("");
-  const [recipeDetailsDirections, setRecipeDetailsDirections] = useState("Enter Reciepe Directions Here");
+  const [recipeDetailsDirections, setRecipeDetailsDirections] = useState("");
   const [ingredientsDetails, setIngredientsDetails] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();

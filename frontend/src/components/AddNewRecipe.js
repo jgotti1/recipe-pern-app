@@ -10,6 +10,7 @@ const AddNewRecipe = () => {
   const { addRecipe } = useContext(RecipeContext);
   const { recipeFilter } = useContext(RecipeContext);
   const { setRecipeFilteredData } = useContext(RecipeContext);
+  const recipeDetailDirections = "Enter Recipe Directions Here";
 
   // Create new Recipe
   const handleSubmit = async (e) => {
@@ -20,6 +21,7 @@ const AddNewRecipe = () => {
         const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}recipes`, {
           recipe_name: recipeName,
           recipe_type: recipeType,
+          recipe_directions: recipeDetailDirections,
         });
 
         if (response.status === 200) {

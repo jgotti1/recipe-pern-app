@@ -1,25 +1,14 @@
-import React, { useState } from "react";
 import AddIngredient from "./AddIngredient";
-import { useContext } from "react";
+
 import axios from "axios";
-import { RecipeContext } from "../context/RecipeContext";
 
 const Ingredients = ({ ingredientProps, id }) => {
-  const { ingredients, setIngredients } = useContext(RecipeContext);
-
   const handleDelete = async (e, id) => {
     e.stopPropagation();
     try {
       const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}recipes/ingredient/${id}`);
       if (response.status === 200) {
-        setIngredients(
-          ingredientProps.filter((ingredient) => {
-            console.log(ingredient.id);
-            return ingredient.id !== id;
-          })
-        );
-
-        // console.log(ingredientProps)
+        window.location.reload();
       }
     } catch (error) {
       console.log(error);

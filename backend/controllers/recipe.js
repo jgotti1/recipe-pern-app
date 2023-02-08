@@ -51,11 +51,10 @@ router.get("/:id", async (req, res) => {
 //Create single Recipe
 router.post("/", async (req, res) => {
   try {
-    const recipe = await database.query("INSERT INTO recipes (recipe_name, recipe_type, recipe_directions, recipe_notes) VALUES ($1, $2, $3, $4) RETURNING *", [
+    const recipe = await database.query("INSERT INTO recipes (recipe_name, recipe_type, recipe_directions) VALUES ($1, $2, $3) RETURNING *", [
       req.body.recipe_name,
       req.body.recipe_type,
       req.body.recipe_directions,
-      req.body.recipe_notes,
     ]);
     res.json(recipe.rows[0]);
   } catch (error) {
@@ -69,14 +68,14 @@ router.post("/", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   try {
-    const recipe = await database.query("UPDATE recipes SET recipe_name = $1, recipe_type= $2, recipe_directions = $3, recipe_notes = $4  WHERE id = $5 RETURNING *", [
+    const recipe = await database.query("UPDATE recipes SET recipe_name = $1, recipe_type= $2, recipe_directions = $3 WHERE id = $4 RETURNING *", [
       req.body.recipe_name,
       req.body.recipe_type,
       req.body.recipe_directions,
-      req.body.recipe_notes,
       req.params.id,
     ]);
-    // console.log(req.body), res.json(recipe.rows[0]);
+    // console.log(req.body),
+    res.json(recipe.rows[0]);
   } catch (error) {
     console.log(error.message);
   }
