@@ -74,9 +74,9 @@ const RecipeList = () => {
 
   return (
     <div className="list-group container-sm mt-4 recipeList">
-      <form className="justify-content-center row ">
+      <form className="justify-content-center row">
         <div className="col-7 filterMe">
-          <select value={filter} onChange={(e) => setFilter(e.target.value)} className="form-select" id="autoSizingSelect">
+          <select value={filter} onChange={(e) => setFilter(e.target.value)} className="form-select shadowBox" id="autoSizingSelect">
             <option disabled value="Filter Recipes">
               Filter Recipes
             </option>
@@ -89,13 +89,13 @@ const RecipeList = () => {
           </select>
         </div>
         <div className="col-auto">
-          <button onClick={handleFilter} className="btn btn-light btn-outline-primary">
+          <button onClick={handleFilter} className="btn btn-light btn-outline-primary shadowBox">
             Set Filter
           </button>
         </div>
       </form>
       <br />
-      <table className="table table-sm table-hover ">
+      <table className="table table-sm table-hover shadowBox">
         <thead>
           <tr className="bg-primary text-white">
             <th className="col-5 ps-3" scope="col">
@@ -109,7 +109,7 @@ const RecipeList = () => {
             </th>
           </tr>
         </thead>
-        <tbody className="tableBody">
+        <tbody className="tableBody  table-light">
           {recipes &&
             recipes.map((recipe) => {
               return (

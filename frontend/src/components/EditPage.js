@@ -42,10 +42,10 @@ const EditPage = () => {
   // console.log(recipeDetails, ingredientsDetails.length);
   return (
     <div>
-      <h1 className="font-weight-bold display-1 text-center mt-1">Recipe Details</h1>
+      <h1 className="font-weight-bold display-1 text-center mt-1 fw-bolder display-1 textShadow mt-4">Recipe Details</h1>
       <div className="d-flex justify-content-center">
         <button
-          className="btn btn-sm btn-outline-secondary my-2 shadow"
+          className="btn btn-sm btn-light btn-outline my-2 shadowBox"
           onClick={() => {
             navigate("/");
           }}>
@@ -53,8 +53,8 @@ const EditPage = () => {
         </button>
       </div>
       <div className="recipeType">
-        <h3 className="text-info text-center fs-2 fw-bolder recipeName">{recipeDetailsName}</h3>
-        <select value={recipeDetailsType} onChange={(e) => setRecipeDetailsType(e.target.value)} className="form-select recipeTypeDrop" id="autoSizingSelect">
+        <h3 className="text-primary text-center fs-2 fw-bolder recipeName">{recipeDetailsName}</h3>
+        <select value={recipeDetailsType} onChange={(e) => setRecipeDetailsType(e.target.value)} className="form-select recipeTypeDrop shadowBox" id="autoSizingSelect">
           <option disabled>Type</option>
           <option value="Meal">Meal</option>
           <option value="Dessert">Dessert</option>
@@ -68,8 +68,8 @@ const EditPage = () => {
       <div className="form-group">
         <form>
           <div className="form-group container-flex directions mx-auto">
-            <label>Recipe Directions</label>
-            <textarea value={recipeDetailsDirections} onChange={(e) => setRecipeDetailsDirections(e.target.value)} className="form-control" rows="8"></textarea>
+            <label className="textShadow">Recipe Directions</label>
+            <textarea value={recipeDetailsDirections} onChange={(e) => setRecipeDetailsDirections(e.target.value)} className="form-control shadowBox" rows="8"></textarea>
           </div>
         </form>
 
@@ -82,7 +82,7 @@ const EditPage = () => {
                 window.location.reload();
               }
             }}
-            className="btn btn-secondary my-auto shadow mt-3 text-white btn-outline-primary">
+            className="btn btn-secondary my-auto shadowBox mt-3 text-white btn-outline-primary">
             <u>Save Changes</u>
           </button>
         </div>

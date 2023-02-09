@@ -52,9 +52,9 @@ const AddNewRecipe = () => {
 
   return (
     <div>
-      <h5 className="text-center  text-info mt-4">Create New Recipe</h5>
+      <h5 className="text-center text-primary mt-4 textShadow">Create New Recipe</h5>
       <div className="createBox">
-        <form className="justify-content-center row formBox">
+        <form className="justify-content-center row formBox shadowBox">
           <div className="col-5">
             <label className="visually-hidden" htmlFor="autoSizingInput"></label>
             <input type="text" className="form-control" id="autoSizingInput" placeholder="Recipe Name" value={recipeName} onChange={(e) => setRecipeName(e.target.value)} />

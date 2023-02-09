@@ -20,7 +20,7 @@ const Ingredients = ({ ingredientProps, id }) => {
     <div>
       <AddIngredient ingredientProps={ingredientProps} id={id} />
 
-      <table className="table table-sm table-hover container-sm ingredientWidth">
+      <table className="table table-sm table-hover container-sm ingredientWidth shadowBox">
         <thead>
           <tr className="bg-primary text-white">
             <th className="col ps-3" scope="col">
@@ -34,7 +34,7 @@ const Ingredients = ({ ingredientProps, id }) => {
         {ingredientProps &&
           ingredientProps.map((ingredient) => {
             return (
-              <tbody key={ingredient.id} className="tableBody">
+              <tbody key={ingredient.id} className="tableBody  table-light">
                 <tr>
                   <td className="col ps-3">{ingredient.ingredient}</td>
                   <td>

@@ -23,9 +23,9 @@ function AddIngredient({ id }) {
   return (
     <div>
       <div className="addIngred mb-2 mt-3">
-        <h5>Click here to add ingredients</h5>
+        <h5 className="textShadow">Click here to add ingredients</h5>
         <div>
-          <Button className="btn btn-sm btn-outline-primary text-white" onClick={handleShow}>
+          <Button className="btn btn-sm btn-outline-primary text-white shadowBox" onClick={handleShow}>
             Add
           </Button>
         </div>

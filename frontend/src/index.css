@@ -3,12 +3,20 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url("./images/background.jpg");
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
+.textShadow {
+  text-shadow: 4px 4px 11px #6e6c6c;
+}
+
+.shadowBox {
+  box-shadow: 6px 6px 11px #b8b6b6;
+}
 .copy {
   font-size: 9px;
   vertical-align: top;
@@ -44,7 +52,7 @@ code {
 }
 
 .recipeName {
-  text-shadow: 2px 2px 8px #c2bfbf;
+  text-shadow: 2px 2px 8px #6d6c6c;
   width: 300px;
 }
 
@@ -72,4 +80,3 @@ code {
 .textArea {
   min-height: 1000px;
 }
-
