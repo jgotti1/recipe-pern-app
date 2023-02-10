@@ -1,8 +1,18 @@
 import AddIngredient from "./AddIngredient";
+import { useEffect, useState } from "react";
 
 import axios from "axios";
 
 const Ingredients = ({ ingredientProps, id }) => {
+  const [hideIngredient, setHideIngredient] = useState();
+  console.log(hideIngredient);
+
+  const ingredients = ingredientProps;
+
+  useEffect(() => {
+    setHideIngredient(false);
+  }, []);
+
   const handleDelete = async (e, id) => {
     e.stopPropagation();
     try {
@@ -15,33 +25,53 @@ const Ingredients = ({ ingredientProps, id }) => {
     }
   };
 
-  // console.log(ingredientProps)
+  const handleHideShow = () => {
+    if (hideIngredient === false) {
+      setHideIngredient(true);
+    } else {
+      setHideIngredient(false);
+    }
+  };
+
   return (
     <div>
       <AddIngredient ingredientProps={ingredientProps} id={id} />
+      <div className="hideShow">
+        <button
+          className="btn btn-primary btn-sm hideShowBtn"
+          type="button"
+          onClick={() => {
+            handleHideShow();
+          }}>
+          Click Here Hide/Show Ingredients
+        </button>
+      </div>
+      {!hideIngredient && 
+      <table className="table table-sm table-hover container-sm ingredientWidth shadowBox ">
+        
+          <thead>
+            <tr className="bg-primary text-white">
+              <th className="col ps-3" scope="col">
+                Ingredients
+              </th>
+              <th className="col-1 pe-4" scope="col">
+                Delete
+              </th>
+            </tr>
+          </thead>
 
-      <table className="table table-sm table-hover container-sm ingredientWidth shadowBox">
-        <thead>
-          <tr className="bg-primary text-white">
-            <th className="col ps-3" scope="col">
-              Ingredients
-            </th>
-            <th className="col-1 pe-4" scope="col">
-              Delete
-            </th>
-          </tr>
-        </thead>
-        {ingredientProps &&
-          ingredientProps.map((ingredient) => {
+        {!hideIngredient &&
+          ingredients &&
+          ingredients.map((ingredient) => {
             return (
               <tbody key={ingredient.id} className="tableBody  table-light">
                 <tr>
                   <td className="col ps-3">{ingredient.ingredient}</td>
                   <td>
                     <button
-                      className="btn btn-sm btn-danger"
+                      className="btn btn-sm btn-danger align-items-right"
                       onClick={(e) => {
-                        if (window.confirm("Are you sure you want to delete this recipe?")) {
+                        if (window.confirm(`Are you sure you want to delete this ingredient ${ingredient.ingredient}?`)) {
                           handleDelete(e, ingredient.id);
                         } else {
                           window.location.reload();
@@ -55,6 +85,7 @@ const Ingredients = ({ ingredientProps, id }) => {
             );
           })}
       </table>
+  }
     </div>
   );
 };

@@ -123,7 +123,7 @@ const RecipeList = () => {
                   <td className="col-1">
                     <button
                       onClick={(e) => {
-                        if (window.confirm("Are you sure you want to delete this ingredient?")) {
+                        if (window.confirm(`Are you sure you want to delete this recipe ${recipe.recipe_name}?`)) {
                           handleDelete(e, recipe.id);
                         } else {
                           window.location.reload();
