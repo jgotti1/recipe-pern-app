@@ -21,6 +21,37 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Route to serve the photo
+router.get("/:id/photo", async (req, res) => {
+
+ 
+  try {
+    // console.log(req.params.id)
+    const recipe = await database.query("SELECT photo_name FROM recipes WHERE id = $1", [req.params.id]);
+    // const photoName = recipe.rows[0].photo_name;
+
+    if (recipe.rows.length > 0) {
+      const photoName = recipe.rows[0].photo_name;
+      
+      if (photoName !== undefined && photoName !== null && photoName !== '') {
+        // If photo_name is not blank or null, send the photo_name
+        res.json(photoName);
+      } else {
+        // If photo_name is blank or null, send "no photo image"
+        res.json("no photo image");
+      } 
+    } else {
+      // If no recipe found with the specified id, send an appropriate response
+      res.status(404).json({ error: "Recipe not found" });
+    }
+   
+  
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 //Get all recipes filtered by type
 router.get("/filter/:recipeFilter", async (req, res) => {
   try {
@@ -95,5 +126,7 @@ router.delete("/:id", async (req, res) => {
     console.log(error);
   }
 });
+
+
 
 module.exports = router;

@@ -22,6 +22,10 @@ app.get("/", async (req, res) => {
   res.send("Welcome to my Recipe APP");
 });
 
+// app.get("/recipes/:id/photo", async (req, res) => {
+//   res.send("Welcome to my Recipe APP-2");
+// });
+
 //Routes to controllers
 app.use("/recipes", require("./controllers/recipe"));
 app.use("/recipes/ingredient", require("./controllers/ingredients"));
