@@ -1,4 +1,5 @@
 import AddIngredient from "./AddIngredient";
+import AddPhoto from "./AddPhoto";
 import { useEffect, useState } from "react";
 
 import axios from "axios";
@@ -35,7 +36,10 @@ const Ingredients = ({ ingredientProps, id }) => {
 
   return (
     <div>
-      <AddIngredient ingredientProps={ingredientProps} id={id} />
+      <div className="recipe_add">
+        <AddIngredient ingredientProps={ingredientProps} id={id} />
+      <AddPhoto id={id} />
+      </div>
       <div className="hideShow">
         <button
           className="btn btn-primary btn-sm hideShowBtn"

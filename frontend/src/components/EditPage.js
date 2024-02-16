@@ -10,6 +10,7 @@ const EditPage = () => {
   const [recipeDetailsName, setRecipeDetailsName] = useState("");
   const [recipeDetailsDirections, setRecipeDetailsDirections] = useState("");
   const [ingredientsDetails, setIngredientsDetails] = useState("");
+  const [photoBlank, setPhotoBlank] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -22,10 +23,19 @@ const EditPage = () => {
       setRecipeDetailsName(response.data.recipe.recipe_name);
       setRecipeDetailsDirections(response.data.recipe.recipe_directions);
       setIngredientsDetails(response.data.ingredients);
+      setPhotoBlank(!!response.data.recipe.photo_name); 
+      console.log(response.data.recipe.photo_name)
     };
     updateRecipe();
   }, [id, ingredientsDetails.length]);
 
+  const handleDisplayPhoto = async (e, id) => {
+    e.preventDefault();
+    console.log(id)
+
+  }
+  console.log(`photo= ${photoBlank}`)
+  
   const handleChanges = async (e, id) => {
     e.preventDefault();
     try {
@@ -39,7 +49,7 @@ const EditPage = () => {
     }
     alert("Recipe Changes Applied");
   };
-  // console.log(recipeDetails, ingredientsDetails.length);
+
   return (
     <div>
       <h1 className="font-weight-bold display-1 text-center mt-1 fw-bolder display-1 textShadow mt-4">Recipe Details</h1>
@@ -68,11 +78,15 @@ const EditPage = () => {
       <div className="form-group">
         <form>
           <div className="form-group container-flex directions mx-auto">
-            <label className="textShadow">Recipe Directions</label>
+            <div>
+            <label className="textShadow m-1 directions-a">Recipe Directions:</label>
+            </div>
+        {photoBlank ? (
+          <label className="textShadow m-1 directions-b">This Recipe Contains a Photo: <a className="photoText" onClick={handleDisplayPhoto}>Please Click Here to View it</a></label>
+        ) : null}
             <textarea value={recipeDetailsDirections} onChange={(e) => setRecipeDetailsDirections(e.target.value)} className="form-control shadowBox" rows="8"></textarea>
           </div>
         </form>
-
         <div className="d-flex justify-content-center">
           <button
             onClick={(e) => {

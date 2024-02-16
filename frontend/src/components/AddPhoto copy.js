@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 
-function AddIngredient({ id }) {
+function AddPhoto({ id }) {
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const [ingredient, setIngredient] = useState("");
@@ -22,8 +22,8 @@ function AddIngredient({ id }) {
 
   return (
     <div>
-      <div className="addIngred mb-0 mt-0">
-        <h5 className="textShadow">Click here to add ingredients</h5>
+      <div className="addIngred mb-2 mt-0">
+        <h5 className="textShadow">Click here to add a recipe photo</h5>
         <div>
           <Button className="btn btn-sm btn-outline-primary text-white shadowBox" onClick={handleShow}>
             Add
@@ -32,7 +32,7 @@ function AddIngredient({ id }) {
       </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Add Ingredient</Modal.Title>
+          <Modal.Title>Add Photo</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <input type="text" className="form-control" id="autoSizingInput" placeholder="Enter New Ingredient" value={ingredient} onChange={(e) => setIngredient(e.target.value)} />
@@ -51,4 +51,4 @@ function AddIngredient({ id }) {
   );
 }
 
-export default AddIngredient;
+export default AddPhoto;

@@ -2,14 +2,15 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const dotenv = require("dotenv");
+// const multer = require("multer"); // Add multer for handling file uploads
+
 
 const app = express();
 app.use(cors());
 dotenv.config();
 app.use(express.urlencoded({ extended: true }));
 
-//Deploy code for mono app
-// serve static front end in production mode
+
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "public", "build")));
 }
@@ -22,13 +23,16 @@ app.get("/", async (req, res) => {
   res.send("Welcome to my Recipe APP");
 });
 
-// app.get("/recipes/:id/photo", async (req, res) => {
-//   res.send("Welcome to my Recipe APP-2");
-// });
 
 //Routes to controllers
 app.use("/recipes", require("./controllers/recipe"));
 app.use("/recipes/ingredient", require("./controllers/ingredients"));
+app.use("/recipes/photo", require("./controllers/photo"));
+
+
+// Route to handle photo upload
+
+
 
 //******************* Server connect ******************
 const port = process.env.PORT || 5001;
