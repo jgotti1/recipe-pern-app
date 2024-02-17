@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 //Default Route
 app.get("/", async (req, res) => {
-  res.send("Welcome to my Recipe APP");
+  res.send("Welcome to my Recipe APP!");
 });
 
 
