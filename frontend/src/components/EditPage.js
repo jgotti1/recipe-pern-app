@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Ingredients from "./Ingredients";
+import ImageModal from "./ImageModol";
 
 const EditPage = () => {
   const [recipeDetails, setRecipeDetails] = useState("");
@@ -11,6 +12,8 @@ const EditPage = () => {
   const [recipeDetailsDirections, setRecipeDetailsDirections] = useState("");
   const [ingredientsDetails, setIngredientsDetails] = useState("");
   const [photoBlank, setPhotoBlank] = useState(false);
+  const [photoUrl, setPhotoUrl] = useState("");
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -29,11 +32,25 @@ const EditPage = () => {
     updateRecipe();
   }, [id, ingredientsDetails.length]);
 
-  const handleDisplayPhoto = async (e, id) => {
-    e.preventDefault();
-    console.log(id)
 
+const handleDisplayPhoto = async () => {
+  try {
+    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}recipes/${id}`);
+    const photoName = response.data.recipe.photo_name; // Assuming the response contains the photo name
+    const photoUrl = `${process.env.REACT_APP_SERVER_URL}images/${photoName}`;
+    setPhotoUrl(photoUrl);
+    setShowModal(true);
+    console.log(photoUrl)
+  } catch (error) {
+    console.error("Error fetching photo:", error);
   }
+};
+
+
+
+
+
+
   console.log(`photo= ${photoBlank}`)
   
   const handleChanges = async (e, id) => {
@@ -81,6 +98,7 @@ const EditPage = () => {
             <div>
             <label className="textShadow m-1 directions-a">Recipe Directions:</label>
             </div>
+            <ImageModal photoUrl={photoUrl}/>
         {photoBlank ? (
           <label className="textShadow m-1 directions-b">This Recipe Contains a Photo: <a className="photoText" onClick={handleDisplayPhoto}>Please Click Here to View it</a></label>
         ) : null}

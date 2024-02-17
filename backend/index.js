@@ -18,6 +18,10 @@ if (process.env.NODE_ENV === "production") {
 // returns req.body object
 app.use(express.json());
 
+// Serve static files from the public directory
+app.use(express.static(path.join(__dirname, "public")));
+
+
 //Default Route
 app.get("/", async (req, res) => {
   res.send("Welcome to my Recipe APP");
