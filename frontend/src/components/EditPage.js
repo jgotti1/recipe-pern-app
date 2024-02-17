@@ -40,7 +40,6 @@ const handleDisplayPhoto = async () => {
     const photoUrl = `${process.env.REACT_APP_SERVER_URL}images/${photoName}`;
     setPhotoUrl(photoUrl);
     setShowModal(true);
-    console.log(photoUrl)
   } catch (error) {
     console.error("Error fetching photo:", error);
   }
@@ -98,7 +97,7 @@ const handleDisplayPhoto = async () => {
             <div>
             <label className="textShadow m-1 directions-a">Recipe Directions:</label>
             </div>
-            <ImageModal photoUrl={photoUrl}/>
+            <ImageModal showModal={showModal} setShowModal={setShowModal} photoUrl={photoUrl}/>
         {photoBlank ? (
           <label className="textShadow m-1 directions-b">This Recipe Contains a Photo: <a className="photoText" onClick={handleDisplayPhoto}>Please Click Here to View it</a></label>
         ) : null}

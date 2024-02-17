@@ -2,11 +2,16 @@ import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Image from 'react-bootstrap/Image';
 
-const ImageModal = ({photoUrl}) => {
+const ImageModal = ({ photoUrl, showModal, setShowModal }) => {
+  
+    const handleClose = () => {
+    setShowModal(false); // Set showModal to false when closing the modal
+    };
+  
   return (
-    <Modal show={false} onHide={false} dialogClassName="image-modal">
+    <Modal show={showModal} onHide={handleClose} dialogClassName="image-modal">
       <Modal.Header closeButton>
-        <Modal.Title>Image</Modal.Title>
+        <Modal.Title>Recipe Image</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Image src={photoUrl} fluid />
