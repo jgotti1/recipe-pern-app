@@ -66,6 +66,21 @@ const RecipeList = () => {
     }
   };
 
+  const handleDeleteWithPasswordCheck = async (e, id, recipe) => {
+      console.log(process.env.REACT_APP_DELETE_PASS)
+    const deletePass = process.env.REACT_APP_DELETE_PASS; // Retrieve delete password from .env
+    const enteredPass = prompt('Enter delete password:'); // Prompt user for delete password
+
+    if (enteredPass === deletePass) {
+      if (window.confirm(`Are you sure you want to delete this recipe ${recipe.recipe_name}?`)) {
+        handleDelete(e, id);
+      }
+    } else {
+      alert('Wrong password. Cannot delete recipe.');
+      window.location.reload();
+    }
+  };
+
   //Edit Recipe
   const handleDetails = (e, id) => {
     e.stopPropagation();
@@ -122,13 +137,7 @@ const RecipeList = () => {
                   <td className="col-5 ps-1"> {recipe.recipe_type}</td>
                   <td className="col-1">
                     <button
-                      onClick={(e) => {
-                        if (window.confirm(`Are you sure you want to delete this recipe ${recipe.recipe_name}?`)) {
-                          handleDelete(e, recipe.id);
-                        } else {
-                          window.location.reload();
-                        }
-                      }}
+                      onClick={(e) => handleDeleteWithPasswordCheck(e, recipe.id, recipe)}
                       className="btn btn-sm btn-danger">
                       Delete
                     </button>

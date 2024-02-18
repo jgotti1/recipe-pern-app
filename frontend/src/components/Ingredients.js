@@ -1,58 +1,56 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import AddIngredient from "./AddIngredient";
 import AddPhoto from "./AddPhoto";
-import { useEffect, useState } from "react";
-
-import axios from "axios";
 
 const Ingredients = ({ ingredientProps, id }) => {
-  const [hideIngredient, setHideIngredient] = useState();
-
-
-  const ingredients = ingredientProps;
+  const [hideIngredient, setHideIngredient] = useState(false);
 
   useEffect(() => {
     setHideIngredient(false);
   }, []);
 
-  const handleDelete = async (e, id) => {
+  const handleDelete = async (e, id, ingredientName) => {
     e.stopPropagation();
-    try {
-      const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}recipes/ingredient/${id}`);
-      if (response.status === 200) {
-        window.location.reload();
+    const enteredPass = prompt('Enter delete password:');
+    const deletePass = process.env.REACT_APP_DELETE_PASS;
+
+    if (enteredPass === deletePass) {
+      try {
+        const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}recipes/ingredient/${id}`);
+        if (response.status === 200) {
+          window.location.reload();
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
+    } else {
+      alert('Wrong password. Cannot delete ingredient.');
+      window.location.reload();
     }
   };
 
   const handleHideShow = () => {
-    if (hideIngredient === false) {
-      setHideIngredient(true);
-    } else {
-      setHideIngredient(false);
-    }
+    setHideIngredient(!hideIngredient);
   };
 
   return (
     <div>
       <div className="recipe_add">
         <AddIngredient ingredientProps={ingredientProps} id={id} />
-      <AddPhoto id={id} />
+        <AddPhoto id={id} />
       </div>
       <div className="hideShow">
         <button
           className="btn btn-primary btn-sm hideShowBtn"
           type="button"
-          onClick={() => {
-            handleHideShow();
-          }}>
+          onClick={handleHideShow}
+        >
           Click Here Hide/Show Ingredients
         </button>
       </div>
-      {!hideIngredient && 
-      <table className="table table-sm table-hover container-sm ingredientWidth shadowBox ">
-        
+      {!hideIngredient && (
+        <table className="table table-sm table-hover container-sm ingredientWidth shadowBox">
           <thead>
             <tr className="bg-primary text-white">
               <th className="col ps-3" scope="col">
@@ -63,33 +61,32 @@ const Ingredients = ({ ingredientProps, id }) => {
               </th>
             </tr>
           </thead>
-
-        {!hideIngredient &&
-          ingredients &&
-          ingredients.map((ingredient) => {
-            return (
-              <tbody key={ingredient.id} className="tableBody  table-light">
+          {ingredientProps &&
+            ingredientProps.map((ingredient) => (
+              <tbody key={ingredient.id} className="tableBody table-light">
                 <tr>
                   <td className="col ps-3">{ingredient.ingredient}</td>
                   <td>
                     <button
                       className="btn btn-sm btn-danger align-items-right"
                       onClick={(e) => {
-                        if (window.confirm(`Are you sure you want to delete this ingredient ${ingredient.ingredient}?`)) {
-                          handleDelete(e, ingredient.id);
-                        } else {
-                          window.location.reload();
+                        if (
+                          window.confirm(
+                            `Are you sure you want to delete this ingredient ${ingredient.ingredient}?`
+                          )
+                        ) {
+                          handleDelete(e, ingredient.id, ingredient.ingredient);
                         }
-                      }}>
+                      }}
+                    >
                       Delete
                     </button>
                   </td>
                 </tr>
               </tbody>
-            );
-          })}
-      </table>
-  }
+            ))}
+        </table>
+      )}
     </div>
   );
 };
