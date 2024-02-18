@@ -22,7 +22,7 @@ const RecipeList = () => {
         try {
           const data = await axios.get(`${process.env.REACT_APP_SERVER_URL}recipes`);
           setRecipes(data.data);
-          console.log("UseEffect Ran");
+         
         } catch (error) {
           console.log(error);
         }

@@ -32,6 +32,7 @@ app.get("/", async (req, res) => {
 app.use("/recipes", require("./controllers/recipe"));
 app.use("/recipes/ingredient", require("./controllers/ingredients"));
 app.use("/recipes/photo", require("./controllers/photo"));
+app.use("/recipes/photo2", require("./controllers/photo2"));
 
 
 // Route to handle photo upload

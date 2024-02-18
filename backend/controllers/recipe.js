@@ -76,7 +76,7 @@ router.put("/:id", async (req, res) => {
       req.body.recipe_directions,
       req.params.id,
     ]);
-    // console.log(req.body),
+   
     res.json(recipe.rows[0]);
   } catch (error) {
     console.log(error.message);

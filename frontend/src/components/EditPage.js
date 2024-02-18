@@ -12,10 +12,17 @@ const EditPage = () => {
   const [recipeDetailsDirections, setRecipeDetailsDirections] = useState("");
   const [ingredientsDetails, setIngredientsDetails] = useState("");
   const [photoBlank, setPhotoBlank] = useState(false);
+  const [photoBlank2, setPhotoBlank2] = useState(false);
   const [photoUrl, setPhotoUrl] = useState("");
+  const [photoUrl2, setPhotoUrl2] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [photoName1, setPhotoName1] = useState()
+  const [photoName2, setPhotoName2] = useState()
+
   const navigate = useNavigate();
   const { id } = useParams();
+
+
 
   useEffect(() => {
     const updateRecipe = async (res, req) => {
@@ -26,19 +33,35 @@ const EditPage = () => {
       setRecipeDetailsName(response.data.recipe.recipe_name);
       setRecipeDetailsDirections(response.data.recipe.recipe_directions);
       setIngredientsDetails(response.data.ingredients);
+      setPhotoName1(response.data.recipe.photo_name);
+      setPhotoName2(response.data.recipe.photo_name_2);
       setPhotoBlank(!!response.data.recipe.photo_name); 
-      console.log(response.data.recipe.photo_name)
+      setPhotoBlank2(!!response.data.recipe.photo_name_2); 
+
     };
     updateRecipe();
-  }, [id, ingredientsDetails.length]);
+  }, [id, ingredientsDetails.length, photoName1, photoName2, showModal]);
+ 
+
 
 
 const handleDisplayPhoto = async () => {
   try {
     const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}recipes/${id}`);
     const photoName = response.data.recipe.photo_name; // Assuming the response contains the photo name
-    const photoUrl = `${process.env.REACT_APP_SERVER_URL}images/${photoName}`;
-    setPhotoUrl(photoUrl);
+    const photoName2 = response.data.recipe.photo_name_2; // Assuming the response contains the photo name 2
+    
+    if (photoName && !photoName.includes("null")) {
+      const photoUrl = `${process.env.REACT_APP_SERVER_URL}images/${photoName}`;
+      setPhotoUrl(photoUrl);
+    }
+    if (photoName2 && !photoName2.includes("null")) {
+      const photoUrl2 = `${process.env.REACT_APP_SERVER_URL}images/${photoName2}`;
+      setPhotoUrl2(photoUrl2);
+    }
+  
+    
+   
     setShowModal(true);
   } catch (error) {
     console.error("Error fetching photo:", error);
@@ -46,11 +69,6 @@ const handleDisplayPhoto = async () => {
 };
 
 
-
-
-
-
-  console.log(`photo= ${photoBlank}`)
   
   const handleChanges = async (e, id) => {
     e.preventDefault();
@@ -90,6 +108,8 @@ const handleDisplayPhoto = async () => {
         </select>
       </div>
 
+     
+
       <Ingredients ingredientProps={ingredientsDetails} id={id} />
       <div className="form-group">
         <form>
@@ -97,8 +117,8 @@ const handleDisplayPhoto = async () => {
             <div>
             <label className="textShadow m-1 directions-a">Recipe Directions:</label>
             </div>
-            <ImageModal showModal={showModal} setShowModal={setShowModal} photoUrl={photoUrl}/>
-        {photoBlank ? (
+            <ImageModal showModal={showModal} setShowModal={setShowModal} photoUrl={photoUrl} photoUrl2={photoUrl2} />
+        {photoBlank || photoBlank2 ? (
           <label className="textShadow m-1 directions-b">This Recipe Contains a Photo: <a className="photoText" onClick={handleDisplayPhoto}>Please Click Here to View it</a></label>
         ) : null}
             <textarea value={recipeDetailsDirections} onChange={(e) => setRecipeDetailsDirections(e.target.value)} className="form-control shadowBox" rows="8"></textarea>

@@ -6,7 +6,7 @@ import axios from "axios";
 
 const Ingredients = ({ ingredientProps, id }) => {
   const [hideIngredient, setHideIngredient] = useState();
-  console.log(hideIngredient);
+
 
   const ingredients = ingredientProps;
 

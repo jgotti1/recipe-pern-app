@@ -21,33 +21,19 @@ const upload = multer({ storage: storage });
 
 router.use(cors());
 
-// router.put("/:recipeId", upload.single("photo"), async (req, res) => {
-//   const recipeId = req.params.recipeId;
-//   const photoName = req.file.originalname;
-
-//   try {
-//     await database.query("UPDATE recipes SET photo_name = $1 WHERE id = $2", [photoName, recipeId]);
-//     res.status(200).send("Photo name updated successfully");
-//   } catch (error) {
-//     console.error("Error updating photo name:", error);
-//     res.status(500).send("Error updating photo name");
-//   }
-// });
-
-
-router.put("/:recipeId", upload.single("photo"), async (req, res) => {
+router.put("/:recipeId", upload.single("photo2"), async (req, res) => {
   const recipeId = req.params.recipeId;
-  let photoName; // Declare photoName2 without initializing it
+  let photoName2; // Declare photoName2 without initializing it
 
   // Check if req.file exists before accessing its properties
   if (req.file) {
-    photoName = req.file.originalname;
+    photoName2 = req.file.originalname;
   } else {
-    photoName = null; // Set photoName2 to null if req.file does not exist
+    photoName2 = null; // Set photoName2 to null if req.file does not exist
   }
 
   try {
-    await database.query("UPDATE recipes SET photo_name = $1 WHERE id = $2", [photoName, recipeId]);
+    await database.query("UPDATE recipes SET photo_name_2 = $1 WHERE id = $2", [photoName2, recipeId]);
     res.status(200).send("Photo name updated successfully");
   } catch (error) {
     console.error("Error updating photo name:", error);
