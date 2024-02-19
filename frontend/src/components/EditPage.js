@@ -49,14 +49,14 @@ const handleDisplayPhoto = async () => {
   try {
     const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}recipes/${id}`);
     const photoName = response.data.recipe.photo_name; // Assuming the response contains the photo name
-    const photoName2 = response.data.recipe.photo_name_2; // Assuming the response contains the photo name 2
+    const photoName2 = response.data.recipe.photo_name_2; // Assuming the response contains the photo name 2    
     
     if (photoName && !photoName.includes("null")) {
-      const photoUrl = `${process.env.REACT_APP_SERVER_URL}images/${photoName}`;
+      const photoUrl = photoName;
       setPhotoUrl(photoUrl);
     }
     if (photoName2 && !photoName2.includes("null")) {
-      const photoUrl2 = `${process.env.REACT_APP_SERVER_URL}images/${photoName2}`;
+      const photoUrl2 = photoName2;
       setPhotoUrl2(photoUrl2);
     }
   

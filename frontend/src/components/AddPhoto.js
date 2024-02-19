@@ -48,7 +48,7 @@ useEffect(() => {
   const handleShow = () => setShow(true);
   const handleClose = () => {
     setShow(false);
-    // window.location.reload();
+    window.location.reload();
 
   }
 
@@ -94,9 +94,11 @@ useEffect(() => {
       
 
         // Close the modal after successful upload and update
-        setShow(false);
-        setPhoto(null);
-        setPhoto2(null);
+          setShow(false);
+          setPhoto(null);
+          setPhoto2(null);
+          setPhotoURL(null); // Reset photoURL
+          setPhoto2URL(null); // Reset photo2URL
         
           window.location.reload();
 };

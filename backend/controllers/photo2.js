@@ -16,7 +16,6 @@ router.put("/:recipeId", async (req, res) => {
   const { photo2URL } = req.body; // Assuming the photo URL is sent in the request body
 
   try {
-    console.log(photo2URL)
    await database.query("UPDATE recipes SET photo_name_2 = $1 WHERE id = $2", [photo2URL, recipeId]);
     res.status(200).send("Photo URL updated successfully");
   } catch (error) {
