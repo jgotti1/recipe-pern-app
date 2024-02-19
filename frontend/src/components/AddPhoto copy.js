@@ -3,32 +3,17 @@ import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import { imageDB } from "./Connections/Connection";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
-import { useEffect } from "react";
 
 function AddPhoto({ id }) {
   const [show, setShow] = useState(false);
   const [photo, setPhoto] = useState(null); // State to store the selected photo
   const [photo2, setPhoto2] = useState(null); // State to store the selected photo
-  const [photoURL, setPhotoURL] = useState(null); // State to store the selected photo
-  const [photo2URL, setPhoto2URL] = useState(null); // State to store the selected photo
 
-
-  useEffect(() => {
-    console.log("photoURL:", photoURL);
-    setPhotoURL(null)
-}, [photoURL]);
-
-useEffect(() => {
-  console.log("photo2URL:", photo2URL);
-    setPhoto2URL(null)
-}, [photo2URL]);
 
   const handleShow = () => setShow(true);
   const handleClose = () => {
     setShow(false);
-    // window.location.reload();
+    window.location.reload();
 
   }
 
@@ -45,56 +30,51 @@ useEffect(() => {
 
   const handleSave = async (e) => {
   e.preventDefault();
-
-        const formData = new FormData();
-        if (photo) {
-          formData.append("photo", photo);
-            const photoRef1 = ref(imageDB, photo.name);
-            await uploadBytes(photoRef1, photo);
-
-            const downloadURL1 = await getDownloadURL(photoRef1);
-            setPhotoURL(downloadURL1);
-        } else {
-            formData.append("photo", null);
-            // setPhotoURL(null);
-        }
-
-        const formData2 = new FormData();
-        if (photo2) {
-          formData2.append("photo2", photo2);
-            const photoRef2 = ref(imageDB, photo2.name);
-            await uploadBytes(photoRef2, photo2);
-
-            const downloadURL2 = await getDownloadURL(photoRef2);
-          setPhoto2URL(downloadURL2);
-        } else {
-          formData2.append("photo2", null);
-          // setPhoto2URL(null);
-        }
-      
-
-        // You can now submit your formData if needed
-        // For example:
-        // await axios.post('/your-endpoint', formData);
-        // await axios.post('/your-endpoint', formData2);
-
-        // Close the modal after successful upload and update
-        setShow(false);
-        setPhoto(null);
-        setPhoto2(null);
-        
-      
- 
-
-
-// window.location.reload();
-};
-
-    
   
+  // Create FormData objects to send the photos
+  const formData = new FormData();
+  if (photo) {
+    formData.append("photo", photo);
+  } else {
+    formData.append("photo", null);
+  }
 
- 
+  const formData2 = new FormData();
+  if (photo2) {
+    formData2.append("photo2", photo2);
+  } else {
+    formData2.append("photo2", null);
+  }
+  
+  try {
+    // Upload the photo
+    const photoResponse = await axios.put(`${process.env.REACT_APP_SERVER_URL}recipes/photo/${id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
+    const photoResponse2 = await axios.put(`${process.env.REACT_APP_SERVER_URL}recipes/photo2/${id}`, formData2, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    // Extract the photo name from the response
+    const { data: { photoName } } = photoResponse;
+    const { data: { photoName2 } } = photoResponse2;
+
+
+
+    // Close the modal after successful upload and update
+    setShow(false);
+    setPhoto(null);
+    setPhoto2(null);
+  } catch (error) {
+    console.error("Error uploading photo:", error);
+  }
+    window.location.reload();
+};
 
 
   return (
