@@ -15,16 +15,36 @@ function AddPhoto({ id }) {
   const [photo2URL, setPhoto2URL] = useState(null); // State to store the selected photo
 
 
-  useEffect(() => {
-    console.log("photoURL:", photoURL);
-    setPhotoURL(null)
-}, [photoURL]);
 
 useEffect(() => {
-  console.log("photo2URL:", photo2URL);
-    setPhoto2URL(null)
-}, [photo2URL]);
+    if (photoURL) {
+      axios.put(`${process.env.REACT_APP_SERVER_URL}recipes/photo/${id}`, { photoURL })
+        .then(response => {
+          console.log("Photo URL updated successfully:", response.data);
+        })
+        .catch(error => {
+          console.error("Error updating photo URL:", error);
+        });
+    }
+     console.log("photoURL:", photoURL);
+  
+  }, [photoURL, id]);
 
+  useEffect(() => {
+    if (photo2URL) {
+      axios.put(`${process.env.REACT_APP_SERVER_URL}recipes/photo2/${id}`, { photo2URL })
+        .then(response => {
+          console.log("Photo2 URL updated successfully:", response.data);
+        })
+        .catch(error => {
+          console.error("Error updating photo2 URL:", error);
+        });
+    }
+      console.log("photo2URL:", photo2URL);
+
+  }, [photo2URL, id]);
+
+  
   const handleShow = () => setShow(true);
   const handleClose = () => {
     setShow(false);
@@ -56,7 +76,7 @@ useEffect(() => {
             setPhotoURL(downloadURL1);
         } else {
             formData.append("photo", null);
-            // setPhotoURL(null);
+        
         }
 
         const formData2 = new FormData();
@@ -69,25 +89,16 @@ useEffect(() => {
           setPhoto2URL(downloadURL2);
         } else {
           formData2.append("photo2", null);
-          // setPhoto2URL(null);
+        
         }
       
-
-        // You can now submit your formData if needed
-        // For example:
-        // await axios.post('/your-endpoint', formData);
-        // await axios.post('/your-endpoint', formData2);
 
         // Close the modal after successful upload and update
         setShow(false);
         setPhoto(null);
         setPhoto2(null);
         
-      
- 
-
-
-// window.location.reload();
+          window.location.reload();
 };
 
     
