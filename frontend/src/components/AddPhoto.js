@@ -15,18 +15,19 @@ function AddPhoto({ id }) {
   const [photo2URL, setPhoto2URL] = useState(null); // State to store the selected photo
 
 
-
+// handle putting the imgae URLS to postrgress DB
 useEffect(() => {
     if (photoURL) {
       axios.put(`${process.env.REACT_APP_SERVER_URL}recipes/photo/${id}`, { photoURL })
         .then(response => {
           console.log("Photo URL updated successfully:", response.data);
+          setPhotoURL(null)
         })
         .catch(error => {
           console.error("Error updating photo URL:", error);
         });
     }
-     console.log("photoURL:", photoURL);
+  
   
   }, [photoURL, id]);
 
@@ -35,15 +36,17 @@ useEffect(() => {
       axios.put(`${process.env.REACT_APP_SERVER_URL}recipes/photo2/${id}`, { photo2URL })
         .then(response => {
           console.log("Photo2 URL updated successfully:", response.data);
+          setPhoto2URL(null)
         })
         .catch(error => {
           console.error("Error updating photo2 URL:", error);
         });
     }
-      console.log("photo2URL:", photo2URL);
+     
 
   }, [photo2URL, id]);
 
+/////////////////////////
   
   const handleShow = () => setShow(true);
   const handleClose = () => {
@@ -97,9 +100,7 @@ useEffect(() => {
           setShow(false);
           setPhoto(null);
           setPhoto2(null);
-          setPhotoURL(null); // Reset photoURL
-          setPhoto2URL(null); // Reset photo2URL
-        
+      
           window.location.reload();
 };
 
